@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        PROJECT_ID = 'testpipeline20200709'
+        PROJECT_ID = 'testci20200723'
         CLUSTER_NAME = 'deployment'
         LOCATION = 'us-central1-b'
         CREDENTIALS_ID = 'gke'
@@ -22,7 +22,7 @@ pipeline {
         stage("Push image") {
             steps {
                 script {
-                    docker.withRegistry('https://gcr.io', 'gke') {
+                    docker.withRegistry('https://gcr.io', '${env.CREDENTIALS_ID}') {
                             myapp.push("latest")
                             myapp.push("${env.BUILD_ID}")
                     }
