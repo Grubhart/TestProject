@@ -15,7 +15,7 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
-                     myapp = docker.build("gcr.io/testci20200723/hellotest:${env.BUILD_ID}")
+                     myapp = docker.build("gcr.io/testCI20200723/hellotest:${env.BUILD_ID}")
                 }
             }
         }
@@ -24,7 +24,7 @@ pipeline {
                 script {
                     sh('gcloud auth configure-docker')
                     sh('gcloud auth list')
-                    sh("docker push gcr.io/testci20200723/hellotest:'${env.BUILD_ID}'")
+                    sh("docker push gcr.io/testCI20200723/hellotest:'${env.BUILD_ID}'")
                 }
             }
         }
