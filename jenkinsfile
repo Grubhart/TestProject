@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     sh('export CLOUDSDK_CONFIG=$JENKINS_HOME')
-                    sh('sudo su jenkins -c gcloud version')
+                    sh('gcloud version')
                     sh('docker push gcr.io/testci20200723/hellotest:${env.BUILD_ID}')
                 }
             }
