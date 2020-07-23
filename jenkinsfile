@@ -22,7 +22,7 @@ pipeline {
         stage("Push image") {
             steps {
                 script {
-                    sh('gcloud version')
+                    sh('sudo su bitnami -c gcloud version')
                     sh('docker push gcr.io/testci20200723/hellotest:${env.BUILD_ID}')
                 }
             }
