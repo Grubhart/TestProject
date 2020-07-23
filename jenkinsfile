@@ -17,6 +17,7 @@ pipeline {
                 script {
                     sh('whoami')
                     sh('gcloud version')
+                    sh('docker run hello-world')
                      myapp = docker.build("gcr.io/testci20200723/hellotest:${env.BUILD_ID}")
                 }
             }
