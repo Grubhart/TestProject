@@ -15,9 +15,6 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
-                    sh('whoami')
-                    sh('gcloud version')
-                    sh('docker run hello-world')
                      myapp = docker.build("gcr.io/testci20200723/hellotest:${env.BUILD_ID}")
                 }
             }
@@ -26,10 +23,7 @@ pipeline {
             steps {
                 script {
                     sh('gcloud version')
-                    docker.withRegistry('https://gcr.io/', 'gcpregistry') {
-                                                myapp.push("latest")
-                                                myapp.push("${env.BUILD_ID}")ß
-                                        }
+                    sh('gcloud auth configure-docker')
                     sh('docker push gcr.io/testci20200723/hellotest:${env.BUILD_ID}')
                 }
             }
