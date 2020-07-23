@@ -26,6 +26,10 @@ pipeline {
             steps {
                 script {
                     sh('gcloud version')
+                    docker.withRegistry('https://gcr.io/', 'gcpregistry') {
+                                                myapp.push("latest")
+                                                myapp.push("${env.BUILD_ID}")ß
+                                        }
                     sh('docker push gcr.io/testci20200723/hellotest:${env.BUILD_ID}')
                 }
             }
