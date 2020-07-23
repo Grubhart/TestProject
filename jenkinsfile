@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     sh('gcloud auth configure-docker')
-                    sh('gcloud auth application-default print-access-token')
+                    sh('gcloud auth list')
                     sh("docker push gcr.io/testci20200723/hellotest:'${env.BUILD_ID}'")
                 }
             }
