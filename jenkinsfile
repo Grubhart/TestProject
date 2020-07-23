@@ -15,17 +15,15 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
-                     myapp = docker.build("testci20200723/hellotest:${env.BUILD_ID}")
+                     myapp = docker.build("gcr.io/testci20200723/hellotest:${env.BUILD_ID}")
                 }
             }
         }
         stage("Push image") {
             steps {
                 script {
-                    docker.withRegistry('https://gcr.io/', 'gcr:[gcpcredentials]') {
-                            myapp.push("latest")
-                            myapp.push("${env.BUILD_ID}")ß
-                    }
+                    sh('gcloud auth configure-docker')
+                    sh('docker push gcr.io/testci20200723/hellotest:${env.BUILD_ID}')
                 }
             }
         }
