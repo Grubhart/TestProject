@@ -15,7 +15,7 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
-                     myapp = docker.build("gcr.io/testci20200723/hellotest:${env.BUILD_ID}")
+                     sh('docker.build("gcr.io/testci20200723/hellotest:${env.BUILD_ID}")')
                 }
             }
         }
@@ -23,12 +23,13 @@ pipeline {
             steps {
                 script {
                     sh('gcloud auth configure-docker')
+                    sh('docker push gcr.io/testci20200723/hellotest:${env.BUILD_ID}')
                 }
             }
         }
         stage('Deploy to GKE') {
             steps{
-                sh "sed -i 's/hello:latest/hellotest:${env.BUILD_ID}/g' deployment.yaml"
+                sh "sed -i 's/hello:latest/hellotest:${env.BUILD_ID}/' deployment.yaml"
                 step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
             }
         }
