@@ -23,17 +23,20 @@ pipeline {
             steps {
                 script {
                     withCredentials([file(credentialsId: 'jenkins-service-account', variable: 'GC_key')]) {
-                        sh("gcloud auth activate-service-account --key-file='${GC_key}'")
-                        sh('gcloud auth configure-docker')
-                        sh("docker push gcr.io/'${env.PROJECT_ID}'/hellotest:'${env.BUILD_ID}'")
+                                        sh("gcloud auth activate-service-account --key-file='${GC_key}'")
+                                        sh('gcloud auth configure-docker')
+                                        sh("docker push gcr.io/'${env.PROJECT_ID}'/hellotest:'${env.BUILD_ID}'")
+                                        sh("docker push gcr.io/'${env.PROJECT_ID}'/hellotest:latest")
                     }
                 }
             }
         }
         stage('Deploy to GKE') {
             steps{
-                sh "sed -i 's/hello:latest/hellotest:${env.BUILD_ID}/g' deployment.yaml"
+                sh("sed -i 's/hello:latest/hello:${env.BUILD_ID}/g' deployment.yaml")
                 step([$class: 'KubernetesEngineBuilder', projectId: env.PROJECT_ID, clusterName: env.CLUSTER_NAME, location: env.LOCATION, manifestPattern: 'deployment.yaml', credentialsId: env.CREDENTIALS_ID, verifyDeployments: true])
+
+
             }
         }
     }
