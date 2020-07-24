@@ -22,8 +22,8 @@ pipeline {
         stage("Push image") {
             steps {
                 script {
-                    withCredentials([file(credentialsId: 'jenkins-service-account', variable: 'jenkins-service-account')]) {
-                        sh("gcloud auth activate-service-account --key-file=${jenkins-service-account}")
+                    withCredentials([file(credentialsId: 'jenkins-service-account', file: 'FILE')]) {
+                        sh("gcloud auth activate-service-account --key-file=${FILE}")
                         sh('gcloud auth configure-docker')
                         sh("docker push gcr.io/testci20200723/hellotest:'${env.BUILD_ID}'")
                       }
