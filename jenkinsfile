@@ -25,7 +25,7 @@ pipeline {
                     withCredentials([file(credentialsId: 'jenkins-service-account', variable: 'GC_key')]) {
                         sh("gcloud auth activate-service-account --key-file='${GC_key}'")
                         sh('gcloud auth configure-docker')
-                        sh("docker push gcr.io/testci20200723/hellotest:'${env.BUILD_ID}'")
+                        sh("docker push gcr.io/'${env.PROJECT_ID}'/hellotest:'${env.BUILD_ID}'")
                     }
                 }
             }
