@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                      myapp = docker.build("gcr.io/testci20200723/hellotest:'${env.BUILD_ID}'")
-                     sh("docker tag gcr.io/testci20200723/hellotest:latest")
+                     sh("docker tag gcr.io/testci20200723/hellotest:latest gcr.io/testci20200723/hellotest:'${env.BUILD_ID}'")
 
                 }
             }
