@@ -15,8 +15,8 @@ pipeline {
         stage("Build image") {
             steps {
                 script {
-                     myapp = docker.build("gcr.io/testci20200723/hellotest:${env.BUILD_ID}")
-                     docker.tag("gcr.io/testci20200723/hellotest:latest")
+                     myapp = docker.build("gcr.io/testci20200723/hellotest:'${env.BUILD_ID}'")
+                     sh("docker tag gcr.io/testci20200723/hellotest:latest")
 
                 }
             }
