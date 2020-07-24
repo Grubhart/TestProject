@@ -18,7 +18,6 @@ pipeline {
                 script {
                      myapp = docker.build("gcr.io/testci20200723/hellotest:'${env.BUILD_ID}'")
                      sh("docker tag gcr.io/testci20200723/hellotest:'${env.BUILD_ID}' gcr.io/testci20200723/hellotest:latest")
-
                 }
             }
         }
@@ -41,7 +40,7 @@ pipeline {
                }
              }
         }
-        stage('Deploy to GKE') {
+        stage('Deploy to GKE PROD') {
             steps{
                 sh("sed -i 's/hellotest:latest/hellotest:${env.BUILD_ID}/g' deployment.yaml")
                 sh('cat deployment.yaml')
