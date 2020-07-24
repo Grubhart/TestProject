@@ -5,21 +5,20 @@ metadata:
   labels:
     app: hellotest
 spec:
-  strategy:
-    type: Recreate
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hellotest
   template:
     metadata:
       labels:
         app: hellotest
-        tier: hellotest
     spec:
       containers:
         - name: hellotest
           image: gcr.io/testci20200723/hellotest:latest
-          imagePullPolicy: Always
           ports:
             - containerPort: 5000
-              name: hello
 
 ---
 apiVersion: v1
@@ -30,9 +29,8 @@ metadata:
     app: hellotest
 spec:
   ports:
-    - port: 5000
-      targetPort: 5000
+  - port: 5000
+    targetPort: 5000
   selector:
     app: hellotest
-    tier: hellotest
   type: LoadBalancer
