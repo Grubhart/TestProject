@@ -22,6 +22,7 @@ pipeline {
         stage("Push image") {
             steps {
                 script {
+                    sh('docker-credential-gcr configure-docke')
                     sh('gcloud auth configure-docker')
                     sh('gcloud auth list')
                     sh("docker push gcr.io/testci20200723/hellotest:'${env.BUILD_ID}'")
