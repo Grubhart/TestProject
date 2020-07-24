@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: hellotest
-          image: gcr.io/testci20200723/hellotest:latest
+          image: gcr.io/testci20200723/hellotest
           ports:
             - containerPort: 5000
 
