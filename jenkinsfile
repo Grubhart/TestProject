@@ -4,7 +4,8 @@ pipeline {
         PROJECT_ID = 'testci20200723'
         CLUSTER_NAME = 'deployment'
         LOCATION = 'us-central1-b'
-        CREDENTIALS_ID = 'jenkins-service-account'
+        CREDENTIALS_ID = 'testCI20200723'
+        SERVICE_ACCOUNT = 'jenkins-service-account'
     }
     stages {
         stage("Checkout code") {
